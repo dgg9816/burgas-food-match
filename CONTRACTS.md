@@ -19,6 +19,7 @@ Do not rename, remove, or change the shape of anything listed below without expl
 - `renderLocations(locations)`
 - `renderProfileChoices(choices)`
 - `toggleProfileChoice(choice)`
+- `syncProfileChoices()`
 - `setResultExpansion(isExpanded)`
 - `fillProfile(profile)`
 - `clearProfileFields()`

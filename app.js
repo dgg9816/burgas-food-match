@@ -1,6 +1,6 @@
 import { config } from "./config.js";
 import { source } from "./source.js";
-import { clearProfileFields, clearResults, fillProfile, renderList, renderLocations, renderProfileChoices, setBusy, setCurrentLocationActive, setLocationBusy, setLocationMessage, setProfileMessage, setRadiusValue, setResultExpansion, setStatus, showEmpty, showError, toggleProfileChoice } from "./ui.js";
+import { clearProfileFields, clearResults, fillProfile, renderList, renderLocations, renderProfileChoices, setBusy, setCurrentLocationActive, setLocationBusy, setLocationMessage, setProfileMessage, setRadiusValue, setResultExpansion, setStatus, showEmpty, showError, syncProfileChoices, toggleProfileChoice } from "./ui.js";
 
 const profileForm = document.querySelector("#profile-form");
 const clearProfileAction = document.querySelector("#clear-profile");
@@ -31,6 +31,7 @@ async function findMatches() {
 }
 profileForm.addEventListener("submit", async (event) => { event.preventDefault(); try { await source.save(readProfile()); setProfileMessage("Profile saved in this browser."); } catch (error) { setProfileMessage(error instanceof Error ? error.message : "The profile could not be saved."); } });
 profileForm.addEventListener("click", (event) => { const choice = event.target.closest("[data-profile-target]"); if (choice) toggleProfileChoice(choice); });
+profileForm.addEventListener("input", (event) => { if (event.target.matches("input, select")) syncProfileChoices(); });
 clearProfileAction.addEventListener("click", async () => { await source.save(null); clearProfileFields(); setProfileMessage("Profile cleared from this browser."); });
 findAction.addEventListener("click", findMatches);
 showAllAction.addEventListener("click", () => setResultExpansion(showAllAction.getAttribute("aria-expanded") !== "true"));

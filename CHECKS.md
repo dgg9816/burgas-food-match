@@ -30,10 +30,12 @@ Run this permanent regression list after every phase. Add checks for later phase
 26. [ ] Precise current coordinates are never written to local storage.
 27. [ ] Choosing a prepared location exits current-location mode without changing the saved profile.
 28. [ ] The complete flow remains usable at 375 px and a normal laptop width.
-29. [ ] Profile suggestion chips update the existing fields, restore with the saved profile, and clear with it.
+29. [ ] Profile suggestion chips and typed fields stay synchronized, restore with the saved profile, and clear together.
 30. [ ] Match percentages are deterministic, stay between 0 and 100, and are labeled as preference compatibility rather than safety.
 31. [ ] Exactly one first result is visually identified as the best match.
 32. [ ] Only the top three results are initially visible when more matches exist.
 33. [ ] The view-all control reveals every result and can return to the top three.
 34. [ ] Ratings identify their source when a rating is available.
 35. [ ] The burgundy-and-cream identity, custom mark, controls, and result cards remain usable at phone and laptop widths.
+36. [ ] Fish and shellfish allergy tags are matched independently rather than by substring.
+37. [ ] Disliked ingredients lower ranking without removing the dish, and avoidance contributes to the preference percentage.

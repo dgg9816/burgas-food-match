@@ -121,6 +121,7 @@ renderList(items)
 clearResults()
 renderProfileChoices(choices)
 toggleProfileChoice(choice)
+syncProfileChoices()
 setResultExpansion(isExpanded)
 ```
 

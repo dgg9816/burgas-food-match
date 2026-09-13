@@ -45,6 +45,7 @@ function distanceKm(from, to) {
   return config.distanceEarthRadiusKm * 2 * Math.atan2(Math.sqrt(haversine), Math.sqrt(1 - haversine));
 }
 function includesAny(sourceValues, wantedValues) { return wantedValues.some((wanted) => sourceValues.some((sourceValue) => sourceValue.includes(wanted) || wanted.includes(sourceValue))); }
+function includesExactTag(sourceValues, wantedValues) { return wantedValues.some((wanted) => sourceValues.includes(wanted)); }
 function buildDirectionsUrl(destination) { return `${config.directionsBaseUrl}&destination=${encodeURIComponent(destination)}`; }
 function isValidCoordinates(value) { return value && Number.isFinite(value.latitude) && Number.isFinite(value.longitude) && Math.abs(value.latitude) <= 90 && Math.abs(value.longitude) <= 180; }
 
@@ -59,7 +60,8 @@ function maximumPreferenceScore(profile) {
   return profile.dietaryRules.length * config.scoring.dietaryMatch
     + (profile.preferredCuisines.length ? config.scoring.preferredCuisine : 0)
     + (profile.favoriteFoods.length ? config.scoring.favoriteFood : 0)
-    + (profile.spiceTolerance !== "unknown" ? config.scoring.spiceMatch : 0);
+    + (profile.spiceTolerance !== "unknown" ? config.scoring.spiceMatch : 0)
+    + (profile.dislikedIngredients.length ? Math.abs(config.scoring.dislikedIngredient) : 0);
 }
 
 function preferenceMatchPercent(score, maximumScore) {
@@ -70,8 +72,8 @@ function preferenceMatchPercent(score, maximumScore) {
 function scoreDish(restaurant, dish, profile) {
   const reasons = [];
   const warnings = [];
-  let score = 0;
-  if (profile.allergies.length && includesAny(dish.allergenTags, profile.allergies)) return null;
+  let score = profile.dislikedIngredients.length ? Math.abs(config.scoring.dislikedIngredient) : 0;
+  if (profile.allergies.length && includesExactTag(dish.allergenTags, profile.allergies)) return null;
   if (dish.unknownAllergens) warnings.push(profile.allergies.length ? `Allergen information is incomplete for ${dish.name}.` : `Preparation or allergen details are incomplete for ${dish.name}.`);
   profile.dietaryRules.forEach((rule) => { if (dish.dietaryTags.includes(rule)) { score += config.scoring.dietaryMatch; reasons.push(`${dish.name} is tagged ${rule}.`); } });
   if (includesAny(dish.ingredientTags, profile.dislikedIngredients)) { score += config.scoring.dislikedIngredient; reasons.push(`${dish.name} includes an ingredient you dislike.`); }

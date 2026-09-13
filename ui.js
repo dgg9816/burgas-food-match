@@ -16,7 +16,7 @@ export function showError(message) { clearResults(); results.append(makeStateCar
 export function showEmpty(message) { clearResults(); results.append(makeStateCard(message)); }
 export function clearResults() { results.replaceChildren(); showAllAction.hidden = true; showAllAction.setAttribute("aria-expanded", "false"); }
 
-function syncChoiceChips() {
+export function syncProfileChoices() {
   Object.entries(profileFieldIds).forEach(([key, fieldId]) => {
     const field = document.querySelector(`#${fieldId}`);
     const selected = key === "spiceTolerance" ? [field.value] : field.value.split(",").map((value) => value.trim().toLowerCase()).filter(Boolean);
@@ -37,7 +37,7 @@ export function renderProfileChoices(choices) {
       container.append(choice);
     });
   });
-  syncChoiceChips();
+  syncProfileChoices();
 }
 
 export function toggleProfileChoice(choice) {
@@ -51,7 +51,7 @@ export function toggleProfileChoice(choice) {
     if (matchingIndex >= 0) values.splice(matchingIndex, 1); else values.push(value);
     field.value = values.join(", ");
   }
-  syncChoiceChips();
+  syncProfileChoices();
 }
 
 export function renderList(items) {
@@ -83,7 +83,7 @@ export function renderList(items) {
 }
 export function setResultExpansion(isExpanded) { results.querySelectorAll("[data-result-rank]").forEach((card, index) => { if (index >= config.topMatchCount) card.hidden = !isExpanded; }); showAllAction.setAttribute("aria-expanded", String(isExpanded)); showAllAction.textContent = isExpanded ? `Show top ${config.topMatchCount}` : `View all ${results.children.length} matches`; }
 export function renderLocations(locations) { const select = document.querySelector("#manual-location"); select.replaceChildren(); locations.forEach((location) => { const option = element("option", location.label); option.value = location.id; select.append(option); }); }
-export function fillProfile(profile) { Object.entries(profileFieldIds).forEach(([key, id]) => { document.querySelector(`#${id}`).value = Array.isArray(profile[key]) ? profile[key].join(", ") : profile[key]; }); syncChoiceChips(); }
+export function fillProfile(profile) { Object.entries(profileFieldIds).forEach(([key, id]) => { document.querySelector(`#${id}`).value = Array.isArray(profile[key]) ? profile[key].join(", ") : profile[key]; }); syncProfileChoices(); }
 export function clearProfileFields() { fillProfile({ allergies: [], dietaryRules: [], dislikedIngredients: [], preferredCuisines: [], spiceTolerance: "unknown", favoriteFoods: [] }); }
 export function setProfileMessage(message) { document.querySelector("#profile-message").textContent = message; }
 export function setRadiusValue(radiusKm) { document.querySelector("#radius-km").value = String(radiusKm); }
