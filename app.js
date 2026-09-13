@@ -1,38 +1,32 @@
+import { config } from "./config.js";
 import { source } from "./source.js";
-import { clearResults, renderList, setBusy, setStatus, showEmpty, showError } from "./ui.js";
+import { clearProfileFields, clearResults, fillProfile, renderList, renderLocations, setBusy, setProfileMessage, setRadiusValue, setStatus, showEmpty, showError } from "./ui.js";
 
-const mainAction = document.querySelector("#main-action");
-const emptyAction = document.querySelector("#show-empty");
-const errorAction = document.querySelector("#show-error");
-const clearAction = document.querySelector("#clear-demo");
-
-async function runDemo(demoState = "result") {
-  setBusy(true);
-  setStatus("Preparing the foundation preview…");
-  clearResults();
-
-  try {
-    const items = await source.load({ demoState });
-    if (items.length === 0) {
-      showEmpty("The request worked, but there are no sample matches to display.");
-      setStatus("The empty state is ready.");
-      return;
-    }
-
-    renderList(items);
-    setStatus("One fictional result loaded successfully.");
-  } catch (error) {
-    showError(error instanceof Error ? error.message : "The preview could not be loaded.");
-    setStatus("The readable error state is ready.");
-  } finally {
-    setBusy(false);
-  }
+const profileForm = document.querySelector("#profile-form");
+const clearProfileAction = document.querySelector("#clear-profile");
+const findAction = document.querySelector("#find-matches");
+function splitValues(value) { return value.split(",").map((item) => item.trim()).filter(Boolean); }
+function readProfile() {
+  return {
+    allergies: splitValues(document.querySelector("#allergies").value),
+    dietaryRules: splitValues(document.querySelector("#dietary-rules").value),
+    dislikedIngredients: splitValues(document.querySelector("#disliked-ingredients").value),
+    preferredCuisines: splitValues(document.querySelector("#preferred-cuisines").value),
+    spiceTolerance: document.querySelector("#spice-tolerance").value,
+    favoriteFoods: splitValues(document.querySelector("#favorite-foods").value)
+  };
 }
-
-mainAction.addEventListener("click", () => runDemo());
-emptyAction.addEventListener("click", () => runDemo("empty"));
-errorAction.addEventListener("click", () => runDemo("error"));
-clearAction.addEventListener("click", () => {
-  clearResults();
-  setStatus("");
-});
+async function findMatches() {
+  setBusy(true); setStatus("Comparing your profile with five researched menus…"); clearResults();
+  try {
+    const items = await source.load({ profile: readProfile(), locationId: document.querySelector("#manual-location").value, radiusKm: document.querySelector("#radius-km").value });
+    if (!items.length) { showEmpty("No restaurants fit this radius and profile. Try a wider radius or review your requirements; your saved profile has not been changed."); setStatus("No potential matches found."); return; }
+    renderList(items); setStatus(`${items.length} potential ${items.length === 1 ? "match" : "matches"}, ranked by profile fit.`);
+  } catch (error) { showError(error instanceof Error ? error.message : "Matches could not be loaded."); setStatus("The search could not be completed."); }
+  finally { setBusy(false); }
+}
+profileForm.addEventListener("submit", async (event) => { event.preventDefault(); try { await source.save(readProfile()); setProfileMessage("Profile saved in this browser."); } catch (error) { setProfileMessage(error instanceof Error ? error.message : "The profile could not be saved."); } });
+clearProfileAction.addEventListener("click", async () => { await source.save(null); clearProfileFields(); setProfileMessage("Profile cleared from this browser."); });
+findAction.addEventListener("click", findMatches);
+async function start() { try { renderLocations(await source.locations()); setRadiusValue(config.defaultRadiusKm); const savedProfiles = await source.list(); if (savedProfiles.length) { fillProfile(savedProfiles[0]); setProfileMessage("Saved profile restored from this browser."); } } catch { showError("The Burgas locations could not be loaded. Please refresh and try again."); } }
+start();

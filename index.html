@@ -1,53 +1,32 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="A sample-only foundation for Burgas Food Match.">
-    <title>Burgas Food Match</title>
-    <link rel="stylesheet" href="./style.css">
-  </head>
-  <body>
-    <header id="app-header" class="site-header">
-      <a class="brand" href="#main-content" aria-label="Burgas Food Match home">
-        <span class="brand-mark" aria-hidden="true">BF</span>
-        <span>Burgas Food Match</span>
-      </a>
-      <span class="phase-pill">Foundation preview</span>
-    </header>
-
-    <main id="main-content" class="page-shell">
-      <section class="intro" aria-labelledby="page-title">
-        <p class="eyebrow">Find food with less guesswork</p>
-        <h1 id="page-title">A calmer way to choose where to eat.</h1>
-        <p>This Phase 0 preview proves the site structure and feedback states. Restaurant matching arrives in Phase 1.</p>
-      </section>
-
-      <section id="controls" class="control-card" aria-labelledby="preview-title">
-        <div>
-          <p class="section-kicker">Sample interaction</p>
-          <h2 id="preview-title">Try the foundation</h2>
-          <p>Load one fictional result, then check the empty and error states.</p>
-        </div>
-        <div class="action-row">
-          <button id="main-action" class="primary-button" type="button">Show sample result</button>
-          <button id="show-empty" class="secondary-button" type="button">Show empty state</button>
-          <button id="show-error" class="secondary-button" type="button">Show error state</button>
-          <button id="clear-demo" class="text-button" type="button">Clear</button>
-        </div>
-        <p id="working-indicator" class="working" role="status" hidden>Checking the sample…</p>
-      </section>
-
-      <section class="results-section" aria-labelledby="results-title">
-        <div class="results-heading">
-          <p class="section-kicker">Preview area</p>
-          <h2 id="results-title">What you’ll see</h2>
-        </div>
-        <p id="status" class="status" aria-live="polite"></p>
-        <div id="results" class="results" aria-live="polite"></div>
-      </section>
-    </main>
-
-    <script type="module" src="./app.js"></script>
-  </body>
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Find promising restaurant and dish matches in Burgas based on your food profile.">
+  <title>Burgas Food Match</title><link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header id="app-header" class="site-header"><a class="brand" href="#main-content" aria-label="Burgas Food Match home"><span class="brand-mark" aria-hidden="true">BF</span><span>Burgas Food Match</span></a><span class="phase-pill">Five places · honest matching</span></header>
+  <main id="main-content" class="page-shell">
+    <section class="intro" aria-labelledby="page-title"><p class="eyebrow">Curated for Burgas</p><h1 id="page-title">Your food preferences, mapped to real menus.</h1><p>Create a profile, choose a starting point and see transparent matches from five researched restaurants.</p></section>
+    <section id="controls" class="control-card" aria-labelledby="profile-title">
+      <div class="control-copy"><p class="section-kicker">Step 1</p><h2 id="profile-title">Build your food profile</h2><p>Use commas between items. Medical restrictions are checked before preferences are scored.</p></div>
+      <form id="profile-form" class="profile-form">
+        <label class="field medical-field" for="allergies"><span>Allergies or medical restrictions</span><input id="allergies" type="text" placeholder="e.g. milk, gluten, peanuts" autocomplete="off"><small>Known conflicts remove a dish. Missing information creates a warning.</small></label>
+        <label class="field" for="dietary-rules"><span>Dietary rules</span><input id="dietary-rules" type="text" placeholder="e.g. vegan, vegetarian" autocomplete="off"></label>
+        <label class="field" for="disliked-ingredients"><span>Ingredients you dislike</span><input id="disliked-ingredients" type="text" placeholder="e.g. mushrooms, onion" autocomplete="off"></label>
+        <label class="field" for="preferred-cuisines"><span>Preferred cuisines</span><input id="preferred-cuisines" type="text" placeholder="e.g. Italian, Mediterranean" autocomplete="off"></label>
+        <label class="field" for="spice-tolerance"><span>Spice tolerance</span><select id="spice-tolerance"><option value="unknown">No preference</option><option value="mild">Mild</option><option value="medium">Medium</option><option value="hot">Hot</option></select></label>
+        <label class="field" for="favorite-foods"><span>Favorite foods</span><input id="favorite-foods" type="text" placeholder="e.g. pizza, salmon, salad" autocomplete="off"></label>
+        <div class="profile-actions"><button id="save-profile" class="secondary-button" type="submit">Save on this device</button><button id="clear-profile" class="text-button" type="button">Clear profile</button></div>
+        <p id="profile-message" class="profile-message" aria-live="polite">Your profile stays in this browser and does not transfer between devices.</p>
+      </form>
+      <div class="search-panel"><div><p class="section-kicker">Step 2</p><h2>Choose your search area</h2></div><label class="field" for="manual-location"><span>Starting point</span><select id="manual-location"></select></label><label class="field" for="radius-km"><span>Radius</span><select id="radius-km"><option value="1">1 km</option><option value="3">3 km</option><option value="5">5 km</option><option value="10">10 km</option><option value="20">20 km</option></select></label><div id="main-action" class="find-action"><button id="find-matches" class="primary-button" type="button">Find my matches</button></div></div>
+      <p id="working-indicator" class="working" role="status" hidden>Comparing your profile with five researched menus…</p>
+    </section>
+    <aside id="safety-note" class="safety-note"><strong>Allergy reminder</strong><p>Restaurant menus and preparation methods can change. If you have an allergy or medical restriction, contact the restaurant before ordering. This project suggests possible matches and does not guarantee safety.</p></aside>
+    <section class="results-section" aria-labelledby="results-title"><div class="results-heading"><p class="section-kicker">Ranked suggestions</p><h2 id="results-title">Restaurant matches</h2></div><p id="status" class="status" aria-live="polite"></p><div id="results" class="results" aria-live="polite"></div></section>
+  </main>
+  <script type="module" src="./app.js"></script>
+</body>
 </html>

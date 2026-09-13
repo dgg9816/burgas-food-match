@@ -8,9 +8,13 @@ export const config = Object.freeze({
   profileStorageKey: "burgas-food-match-profile",
   geolocationTimeoutMs: 10000,
   sampleDelayMs: 450,
+  distanceEarthRadiusKm: 6371,
+  distanceDecimals: 1,
+  defaultRadiusKm: 5,
+  minimumMatchScore: 0,
   directionsBaseUrl: "https://www.google.com/maps/dir/?api=1",
   featureFlags: Object.freeze({
-    curatedRecommendations: false,
+    curatedRecommendations: true,
     currentLocation: false
   }),
   scoring: Object.freeze({
