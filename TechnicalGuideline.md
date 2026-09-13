@@ -241,6 +241,9 @@ No required key may be omitted. Use `""`, `null`, `false`, or `[]` for missing v
   sourceUrls: [],
   lastChecked: "",
   verificationNote: "",
+  imageUrl: "",
+  imageAlt: "",
+  imageSourceUrl: "",
   dishes: []
 }
 ```
@@ -277,6 +280,9 @@ No required key may be omitted. Use `""`, `null`, `false`, or `[]` for missing v
   warnings: [],
   directionsUrl: "",
   verificationNote: "",
+  imageUrl: "",
+  imageAlt: "",
+  imageSourceUrl: "",
   dishes: []
 }
 ```

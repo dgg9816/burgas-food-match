@@ -124,6 +124,9 @@ The frozen configuration object protects these names: `projectName`, `sampleData
   sourceUrls: [],
   lastChecked: "",
   verificationNote: "",
+  imageUrl: "",
+  imageAlt: "",
+  imageSourceUrl: "",
   dishes: []
 }
 ```
@@ -160,6 +163,9 @@ The frozen configuration object protects these names: `projectName`, `sampleData
   warnings: [],
   directionsUrl: "",
   verificationNote: "",
+  imageUrl: "",
+  imageAlt: "",
+  imageSourceUrl: "",
   dishes: []
 }
 ```

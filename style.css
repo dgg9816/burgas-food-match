@@ -88,6 +88,12 @@ button:disabled { cursor: wait; opacity: 0.55; }
 .result-card, .state-card { padding: var(--space-4); border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); }
 .result-card { border-left: 0.5rem solid var(--green); }
 .result-card.best-match { border-color: var(--green); background: linear-gradient(145deg, #fffefd, #f8e8e9); box-shadow: var(--shadow); }
+.restaurant-media { position: relative; aspect-ratio: 16 / 9; margin: calc(-1 * var(--space-4)) calc(-1 * var(--space-4)) var(--space-4); overflow: hidden; border-radius: var(--radius-lg) var(--radius-lg) 0 0; background: var(--blue); }
+.restaurant-photo { display: block; width: 100%; height: 100%; object-fit: cover; }
+.photo-source { position: absolute; right: var(--space-2); bottom: var(--space-2); padding: .3rem .55rem; border-radius: var(--radius-sm); color: white; background: rgba(47, 12, 19, .82); font-size: .72rem; font-weight: 750; text-decoration: none; }
+.photo-source:hover { background: var(--green-dark); text-decoration: underline; }
+.restaurant-media.image-unavailable::before { position: absolute; inset: 0; display: grid; place-items: center; color: var(--green-dark); content: "Photo unavailable"; font-weight: 750; }
+.restaurant-media.image-unavailable .restaurant-photo { display: none; }
 .rank-label { margin: 0 0 .35rem; color: var(--green); font-family: var(--font-display); font-size: .76rem; font-weight: 850; letter-spacing: .08em; text-transform: uppercase; }
 .rank-row { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin-bottom: var(--space-2); }
 .rank-badge, .best-badge { display: inline-flex; align-items: center; min-height: 1.8rem; padding: .2rem .6rem; border-radius: 999px; color: var(--green); background: var(--blue); font-size: .76rem; font-weight: 850; text-transform: uppercase; }
@@ -136,6 +142,7 @@ button:disabled { cursor: wait; opacity: 0.55; }
   .fact-grid { grid-template-columns: 1fr 1fr; }
   .results-section { margin-top: var(--space-4); }
   .result-card, .state-card { padding: var(--space-3); }
+  .restaurant-media { margin: calc(-1 * var(--space-3)) calc(-1 * var(--space-3)) var(--space-3); }
 }
 
 @media (min-width: 42.01rem) and (max-width: 60rem) {

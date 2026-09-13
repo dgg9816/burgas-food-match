@@ -39,3 +39,6 @@ Run this permanent regression list after every phase. Add checks for later phase
 35. [ ] The burgundy-and-cream identity, custom mark, controls, and result cards remain usable at phone and laptop widths.
 36. [ ] Fish and shellfish allergy tags are matched independently rather than by substring.
 37. [ ] Disliked ingredients lower ranking without removing the dish, and avoidance contributes to the preference percentage.
+38. [ ] Every restaurant record includes a local photo, useful alt text, and a public attribution source.
+39. [ ] Result photos load lazily in a stable aspect ratio and remain usable at phone and laptop widths.
+40. [ ] A failed photo load shows a readable fallback without breaking the result card.

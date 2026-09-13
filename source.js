@@ -1,7 +1,7 @@
 import { config } from "./config.js";
 
 const profileKeys = Object.freeze(["allergies", "dietaryRules", "dislikedIngredients", "preferredCuisines", "spiceTolerance", "favoriteFoods"]);
-const restaurantKeys = Object.freeze(["id", "name", "address", "latitude", "longitude", "cuisineTags", "priceLevel", "rating", "ratingSource", "openingHours", "directionsQuery", "sourceUrls", "lastChecked", "verificationNote", "dishes"]);
+const restaurantKeys = Object.freeze(["id", "name", "address", "latitude", "longitude", "cuisineTags", "priceLevel", "rating", "ratingSource", "openingHours", "directionsQuery", "sourceUrls", "lastChecked", "verificationNote", "imageUrl", "imageAlt", "imageSourceUrl", "dishes"]);
 const dishKeys = Object.freeze(["id", "name", "description", "dietaryTags", "ingredientTags", "allergenTags", "unknownAllergens", "spiceLevel", "sourceUrl", "lastChecked"]);
 
 function isValidProfile(record) {
@@ -114,7 +114,7 @@ export const source = Object.freeze({
         .filter((entry) => entry && entry.score >= config.minimumMatchScore)
         .sort((a, b) => b.score - a.score);
       if (!eligible.length) return null;
-      return { id: restaurant.id, name: restaurant.name, address: restaurant.address, distanceKm: Number(approximateDistance.toFixed(config.distanceDecimals)), priceLevel: restaurant.priceLevel, rating: restaurant.rating, ratingSource: restaurant.ratingSource, openingHours: restaurant.openingHours, lastChecked: restaurant.lastChecked, matchScore: eligible[0].score, matchPercent: preferenceMatchPercent(eligible[0].score, maximumScore), matchReasons: [...new Set(eligible.flatMap((entry) => entry.reasons))], warnings: [...new Set(eligible.flatMap((entry) => entry.warnings))], directionsUrl: buildDirectionsUrl(restaurant.directionsQuery), verificationNote: restaurant.verificationNote, dishes: eligible.slice(0, 3).map((entry) => entry.dish) };
+      return { id: restaurant.id, name: restaurant.name, address: restaurant.address, distanceKm: Number(approximateDistance.toFixed(config.distanceDecimals)), priceLevel: restaurant.priceLevel, rating: restaurant.rating, ratingSource: restaurant.ratingSource, openingHours: restaurant.openingHours, lastChecked: restaurant.lastChecked, matchScore: eligible[0].score, matchPercent: preferenceMatchPercent(eligible[0].score, maximumScore), matchReasons: [...new Set(eligible.flatMap((entry) => entry.reasons))], warnings: [...new Set(eligible.flatMap((entry) => entry.warnings))], directionsUrl: buildDirectionsUrl(restaurant.directionsQuery), verificationNote: restaurant.verificationNote, imageUrl: restaurant.imageUrl, imageAlt: restaurant.imageAlt, imageSourceUrl: restaurant.imageSourceUrl, dishes: eligible.slice(0, 3).map((entry) => entry.dish) };
     }).filter(Boolean).sort((a, b) => b.matchScore - a.matchScore || a.distanceKm - b.distanceKm);
   },
   async detail(id) { const item = (await getRestaurants()).find((entry) => entry.id === id); if (!item) throw new Error("That restaurant could not be found."); return item; },

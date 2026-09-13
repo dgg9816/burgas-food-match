@@ -60,6 +60,22 @@ export function renderList(items) {
     const card = element("article", "", `result-card${index === 0 ? " best-match" : ""}`);
     card.dataset.resultRank = String(index + 1);
     if (index >= config.topMatchCount) card.hidden = true;
+    const media = element("figure", "", "restaurant-media");
+    const photo = document.createElement("img");
+    photo.className = "restaurant-photo";
+    photo.src = item.imageUrl;
+    photo.alt = item.imageAlt;
+    photo.loading = "lazy";
+    photo.decoding = "async";
+    photo.width = 1200;
+    photo.height = 675;
+    const photoSource = element("a", "Photo source", "photo-source");
+    photoSource.setAttribute("aria-label", `Photo source for ${item.name}`);
+    photoSource.href = item.imageSourceUrl;
+    photoSource.target = "_blank";
+    photoSource.rel = "noopener noreferrer";
+    photo.addEventListener("error", () => media.classList.add("image-unavailable"), { once: true });
+    media.append(photo, photoSource);
     const identity = element("div", "");
     const rank = element("p", index === 0 ? "#1 match · Best Match for You" : `#${index + 1} match`, "rank-label");
     identity.append(rank, element("h3", item.name), element("p", item.address, "result-meta"));
@@ -71,7 +87,7 @@ export function renderList(items) {
     const facts = element("div", "", "fact-grid"); [["Approx. distance", `${item.distanceKm.toFixed(1)} km`], ["Price", item.priceLevel ? "€".repeat(item.priceLevel) : "Unavailable"], ["Rating", rating], ["Hours", item.openingHours.length ? item.openingHours.join(" · ") : "Unavailable"]].forEach(([label, value]) => { const fact = element("div", "", "fact"); fact.append(element("span", label), element("strong", value)); facts.append(fact); });
     const reasons = element("ul", "", "reason-list"); item.matchReasons.forEach((reason) => reasons.append(element("li", reason)));
     const dishes = element("ul", "", "dish-list"); item.dishes.forEach((dish) => { const line = element("li", ""); line.append(element("strong", dish.name), element("small", dish.description || "Description unavailable")); dishes.append(line); });
-    card.append(top, facts, element("strong", "Why it matched"), reasons, element("strong", "Potential dishes"), dishes);
+    card.append(media, top, facts, element("strong", "Why it matched"), reasons, element("strong", "Potential dishes"), dishes);
     if (item.warnings.length) { const warning = element("div", "", "warning-box"); const list = element("ul", "", "warning-list"); item.warnings.forEach((message) => list.append(element("li", message))); warning.append(element("strong", "Information incomplete"), list); card.append(warning); }
     card.append(element("p", item.verificationNote), element("p", `Last checked ${item.lastChecked}`, "result-meta"));
     const sources = element("ul", "", "source-list"); [...new Set(item.dishes.map((dish) => dish.sourceUrl))].forEach((url, index) => { const line = element("li", ""); const link = element("a", `Menu source ${index + 1}`); link.href = url; link.target = "_blank"; link.rel = "noopener noreferrer"; line.append(link); sources.append(line); });
