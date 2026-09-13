@@ -46,6 +46,14 @@ function distanceKm(from, to) {
 }
 function includesAny(sourceValues, wantedValues) { return wantedValues.some((wanted) => sourceValues.some((sourceValue) => sourceValue.includes(wanted) || wanted.includes(sourceValue))); }
 function buildDirectionsUrl(destination) { return `${config.directionsBaseUrl}&destination=${encodeURIComponent(destination)}`; }
+function isValidCoordinates(value) { return value && Number.isFinite(value.latitude) && Number.isFinite(value.longitude) && Math.abs(value.latitude) <= 90 && Math.abs(value.longitude) <= 180; }
+
+function locationErrorMessage(error) {
+  if (error?.code === 1) return "Location permission was denied. Your prepared Burgas location is still selected.";
+  if (error?.code === 2) return "Your current location is unavailable. Continue with the prepared location.";
+  if (error?.code === 3) return "Finding your location took too long. Continue with the prepared location or try again.";
+  return "Your current location could not be read. Continue with the prepared location.";
+}
 
 function scoreDish(restaurant, dish, profile) {
   const reasons = [];
@@ -64,11 +72,20 @@ function scoreDish(restaurant, dish, profile) {
 
 export const source = Object.freeze({
   async locations() { return loadJson(config.locationDataPath); },
+  async currentLocation() {
+    if (!config.featureFlags.currentLocation || !navigator.geolocation) throw new Error("This browser does not support current location. Continue with a prepared location.");
+    return new Promise((resolve, reject) => navigator.geolocation.getCurrentPosition(
+      (position) => resolve({ latitude: position.coords.latitude, longitude: position.coords.longitude }),
+      (error) => reject(new Error(locationErrorMessage(error))),
+      { enableHighAccuracy: config.geolocationEnableHighAccuracy, timeout: config.geolocationTimeoutMs, maximumAge: config.geolocationMaximumAgeMs }
+    ));
+  },
   async load(params = {}) {
     await wait(config.sampleDelayMs);
     const restaurants = await getRestaurants();
     const locations = await loadJson(config.locationDataPath);
-    const location = locations.find((item) => item.id === params.locationId);
+    const preparedLocation = locations.find((item) => item.id === params.locationId);
+    const location = isValidCoordinates(params.currentLocation) ? params.currentLocation : preparedLocation;
     const radiusKm = Number(params.radiusKm);
     if (!isValidProfile(params.profile)) throw new Error("Complete a valid food profile before searching.");
     if (!location || !Number.isFinite(location.latitude) || !Number.isFinite(location.longitude)) throw new Error("Choose a valid Burgas starting point.");

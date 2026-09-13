@@ -21,6 +21,9 @@ Do not rename, remove, or change the shape of anything listed below without expl
 - `clearProfileFields()`
 - `setProfileMessage(message)`
 - `setRadiusValue(radiusKm)`
+- `setLocationBusy(isBusy)`
+- `setLocationMessage(message, kind)`
+- `setCurrentLocationActive(isActive)`
 
 ## Source interface
 
@@ -31,10 +34,11 @@ Do not rename, remove, or change the shape of anything listed below without expl
 - `source.save(record)`
 - `source.list()`
 - `source.locations()`
+- `source.currentLocation()`
 
 ## Configuration property names
 
-The frozen configuration object protects these names: `projectName`, `sampleDataPath`, `restaurantDataPath`, `locationDataPath`, `restaurantLimit`, `maxRadiusKm`, `profileStorageKey`, `geolocationTimeoutMs`, `sampleDelayMs`, `distanceEarthRadiusKm`, `distanceDecimals`, `defaultRadiusKm`, `minimumMatchScore`, `directionsBaseUrl`, `featureFlags.curatedRecommendations`, `featureFlags.currentLocation`, `scoring.dietaryMatch`, `scoring.preferredCuisine`, `scoring.favoriteFood`, `scoring.spiceMatch`, and `scoring.dislikedIngredient`.
+The frozen configuration object protects these names: `projectName`, `sampleDataPath`, `restaurantDataPath`, `locationDataPath`, `restaurantLimit`, `maxRadiusKm`, `profileStorageKey`, `geolocationTimeoutMs`, `geolocationMaximumAgeMs`, `geolocationEnableHighAccuracy`, `sampleDelayMs`, `distanceEarthRadiusKm`, `distanceDecimals`, `defaultRadiusKm`, `minimumMatchScore`, `directionsBaseUrl`, `featureFlags.curatedRecommendations`, `featureFlags.currentLocation`, `scoring.dietaryMatch`, `scoring.preferredCuisine`, `scoring.favoriteFood`, `scoring.spiceMatch`, and `scoring.dislikedIngredient`.
 
 ## Stable DOM IDs
 
@@ -58,6 +62,8 @@ The frozen configuration object protects these names: `projectName`, `sampleData
 - `radius-km`
 - `find-matches`
 - `safety-note`
+- `use-current-location`
+- `location-message`
 
 ## Food profile
 

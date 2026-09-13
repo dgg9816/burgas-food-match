@@ -2,9 +2,10 @@ const mainAction = document.querySelector("#find-matches");
 const workingIndicator = document.querySelector("#working-indicator");
 const status = document.querySelector("#status");
 const results = document.querySelector("#results");
+const currentLocationAction = document.querySelector("#use-current-location");
 function element(tag, text, className = "") { const node = document.createElement(tag); node.textContent = text; if (className) node.className = className; return node; }
 function makeStateCard(message, kind = "empty") { const card = element("div", "", `state-card ${kind}`); card.setAttribute("role", kind === "error" ? "alert" : "status"); card.append(element("h3", kind === "error" ? "Something went wrong" : "Nothing to show yet"), element("p", message)); return card; }
-export function setBusy(isBusy) { mainAction.disabled = isBusy; mainAction.setAttribute("aria-busy", String(isBusy)); workingIndicator.hidden = !isBusy; }
+export function setBusy(isBusy) { mainAction.disabled = isBusy; currentLocationAction.disabled = isBusy; mainAction.setAttribute("aria-busy", String(isBusy)); workingIndicator.hidden = !isBusy; }
 export function setStatus(message) { status.textContent = message; }
 export function showError(message) { clearResults(); results.append(makeStateCard(message, "error")); }
 export function showEmpty(message) { clearResults(); results.append(makeStateCard(message)); }
@@ -30,3 +31,6 @@ export function fillProfile(profile) { const fields = { allergies: "allergies", 
 export function clearProfileFields() { fillProfile({ allergies: [], dietaryRules: [], dislikedIngredients: [], preferredCuisines: [], spiceTolerance: "unknown", favoriteFoods: [] }); }
 export function setProfileMessage(message) { document.querySelector("#profile-message").textContent = message; }
 export function setRadiusValue(radiusKm) { document.querySelector("#radius-km").value = String(radiusKm); }
+export function setLocationBusy(isBusy) { currentLocationAction.disabled = isBusy; mainAction.disabled = isBusy; currentLocationAction.setAttribute("aria-busy", String(isBusy)); }
+export function setLocationMessage(message, kind = "status") { const locationMessage = document.querySelector("#location-message"); locationMessage.textContent = message; locationMessage.className = `location-message ${kind}`; }
+export function setCurrentLocationActive(isActive) { currentLocationAction.setAttribute("aria-pressed", String(isActive)); currentLocationAction.textContent = isActive ? "Use Prepared Location Instead" : "Use My Current Location"; }

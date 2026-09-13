@@ -23,3 +23,10 @@ Run this permanent regression list after every phase. Add checks for later phase
 19. [ ] Menu sources and last-checked dates appear on result cards.
 20. [ ] Directions links target the intended restaurant and require no API key.
 21. [ ] A restrictive profile can produce the readable no-results state without changing the saved profile.
+22. [ ] Current location is requested only after `Use My Current Location` is pressed.
+23. [ ] Granting location permission updates approximate distances and clearly marks current-location mode.
+24. [ ] Denied location permission shows a readable fallback message and preserves the prepared selection.
+25. [ ] Unsupported, unavailable, and timed-out location attempts show readable messages.
+26. [ ] Precise current coordinates are never written to local storage.
+27. [ ] Choosing a prepared location exits current-location mode without changing the saved profile.
+28. [ ] The complete flow remains usable at 375 px and a normal laptop width.
