@@ -1,0 +1,127 @@
+# Burgas Food Match Contracts
+
+These contracts establish the stable seams created in Phase 0. Required object keys are never omitted. Missing values use `""`, `null`, `false`, or `[]` as specified.
+
+## DO NOT CHANGE WITHOUT ASKING
+
+Do not rename, remove, or change the shape of anything listed below without explicit approval. Later phases may add protected items while preserving these.
+
+## UI exports
+
+`ui.js` exports:
+
+- `setBusy(isBusy)`
+- `setStatus(message)`
+- `showError(message)`
+- `showEmpty(message)`
+- `renderList(items)`
+- `clearResults()`
+
+## Source interface
+
+`source.js` exports an object named `source` with async methods:
+
+- `source.load(params)`
+- `source.detail(id)`
+- `source.save(record)`
+- `source.list()`
+
+## Configuration property names
+
+The frozen configuration object protects these names: `projectName`, `sampleDataPath`, `restaurantDataPath`, `locationDataPath`, `restaurantLimit`, `maxRadiusKm`, `profileStorageKey`, `geolocationTimeoutMs`, `sampleDelayMs`, `directionsBaseUrl`, `featureFlags.curatedRecommendations`, `featureFlags.currentLocation`, `scoring.dietaryMatch`, `scoring.preferredCuisine`, `scoring.favoriteFood`, `scoring.spiceMatch`, and `scoring.dislikedIngredient`.
+
+## Stable DOM IDs
+
+- `app-header`
+- `controls`
+- `main-action`
+- `working-indicator`
+- `status`
+- `results`
+
+## Food profile
+
+```js
+{
+  allergies: [],
+  dietaryRules: [],
+  dislikedIngredients: [],
+  preferredCuisines: [],
+  spiceTolerance: "unknown",
+  favoriteFoods: []
+}
+```
+
+## Curated dish
+
+```js
+{
+  id: "",
+  name: "",
+  description: "",
+  dietaryTags: [],
+  ingredientTags: [],
+  allergenTags: [],
+  unknownAllergens: true,
+  spiceLevel: "unknown",
+  sourceUrl: "",
+  lastChecked: ""
+}
+```
+
+## Curated restaurant
+
+```js
+{
+  id: "",
+  name: "",
+  address: "",
+  latitude: null,
+  longitude: null,
+  cuisineTags: [],
+  priceLevel: null,
+  rating: null,
+  ratingSource: "",
+  openingHours: [],
+  directionsQuery: "",
+  sourceUrls: [],
+  lastChecked: "",
+  verificationNote: "",
+  dishes: []
+}
+```
+
+## Prepared location
+
+```js
+{
+  id: "",
+  label: "",
+  latitude: null,
+  longitude: null,
+  sourceUrl: "",
+  lastChecked: ""
+}
+```
+
+## Rendered result
+
+```js
+{
+  id: "",
+  name: "",
+  address: "",
+  distanceKm: null,
+  priceLevel: null,
+  rating: null,
+  ratingSource: "",
+  openingHours: [],
+  lastChecked: "",
+  matchScore: 0,
+  matchReasons: [],
+  warnings: [],
+  directionsUrl: "",
+  verificationNote: "",
+  dishes: []
+}
+```

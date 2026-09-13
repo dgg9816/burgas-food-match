@@ -1,0 +1,19 @@
+[
+  {
+    "id": "sample-harbor-table",
+    "name": "Harbor Table (sample)",
+    "address": "Fictional address, Burgas",
+    "distanceKm": null,
+    "priceLevel": null,
+    "rating": null,
+    "ratingSource": "",
+    "openingHours": [],
+    "lastChecked": "",
+    "matchScore": 0,
+    "matchReasons": ["Sample data only"],
+    "warnings": ["This is not a real restaurant recommendation."],
+    "directionsUrl": "",
+    "verificationNote": "Phase 0 uses fictional content to test the result layout.",
+    "dishes": []
+  }
+]

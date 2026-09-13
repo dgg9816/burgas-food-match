@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A sample-only foundation for Burgas Food Match.">
+    <title>Burgas Food Match</title>
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <header id="app-header" class="site-header">
+      <a class="brand" href="#main-content" aria-label="Burgas Food Match home">
+        <span class="brand-mark" aria-hidden="true">BF</span>
+        <span>Burgas Food Match</span>
+      </a>
+      <span class="phase-pill">Foundation preview</span>
+    </header>
+
+    <main id="main-content" class="page-shell">
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow">Find food with less guesswork</p>
+        <h1 id="page-title">A calmer way to choose where to eat.</h1>
+        <p>This Phase 0 preview proves the site structure and feedback states. Restaurant matching arrives in Phase 1.</p>
+      </section>
+
+      <section id="controls" class="control-card" aria-labelledby="preview-title">
+        <div>
+          <p class="section-kicker">Sample interaction</p>
+          <h2 id="preview-title">Try the foundation</h2>
+          <p>Load one fictional result, then check the empty and error states.</p>
+        </div>
+        <div class="action-row">
+          <button id="main-action" class="primary-button" type="button">Show sample result</button>
+          <button id="show-empty" class="secondary-button" type="button">Show empty state</button>
+          <button id="show-error" class="secondary-button" type="button">Show error state</button>
+          <button id="clear-demo" class="text-button" type="button">Clear</button>
+        </div>
+        <p id="working-indicator" class="working" role="status" hidden>Checking the sample…</p>
+      </section>
+
+      <section class="results-section" aria-labelledby="results-title">
+        <div class="results-heading">
+          <p class="section-kicker">Preview area</p>
+          <h2 id="results-title">What you’ll see</h2>
+        </div>
+        <p id="status" class="status" aria-live="polite"></p>
+        <div id="results" class="results" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
