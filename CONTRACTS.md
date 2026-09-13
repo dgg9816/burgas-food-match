@@ -17,6 +17,9 @@ Do not rename, remove, or change the shape of anything listed below without expl
 - `renderList(items)`
 - `clearResults()`
 - `renderLocations(locations)`
+- `renderProfileChoices(choices)`
+- `toggleProfileChoice(choice)`
+- `setResultExpansion(isExpanded)`
 - `fillProfile(profile)`
 - `clearProfileFields()`
 - `setProfileMessage(message)`
@@ -38,7 +41,7 @@ Do not rename, remove, or change the shape of anything listed below without expl
 
 ## Configuration property names
 
-The frozen configuration object protects these names: `projectName`, `sampleDataPath`, `restaurantDataPath`, `locationDataPath`, `restaurantLimit`, `maxRadiusKm`, `profileStorageKey`, `geolocationTimeoutMs`, `geolocationMaximumAgeMs`, `geolocationEnableHighAccuracy`, `sampleDelayMs`, `distanceEarthRadiusKm`, `distanceDecimals`, `defaultRadiusKm`, `minimumMatchScore`, `directionsBaseUrl`, `featureFlags.curatedRecommendations`, `featureFlags.currentLocation`, `scoring.dietaryMatch`, `scoring.preferredCuisine`, `scoring.favoriteFood`, `scoring.spiceMatch`, and `scoring.dislikedIngredient`.
+The frozen configuration object protects these names: `projectName`, `sampleDataPath`, `restaurantDataPath`, `locationDataPath`, `restaurantLimit`, `maxRadiusKm`, `profileStorageKey`, `geolocationTimeoutMs`, `geolocationMaximumAgeMs`, `geolocationEnableHighAccuracy`, `sampleDelayMs`, `distanceEarthRadiusKm`, `distanceDecimals`, `defaultRadiusKm`, `minimumMatchScore`, `topMatchCount`, `matchPercentMaximum`, `directionsBaseUrl`, `profileChoices.allergies`, `profileChoices.dietaryRules`, `profileChoices.dislikedIngredients`, `profileChoices.preferredCuisines`, `profileChoices.spiceTolerance`, `profileChoices.favoriteFoods`, `featureFlags.curatedRecommendations`, `featureFlags.currentLocation`, `scoring.dietaryMatch`, `scoring.preferredCuisine`, `scoring.favoriteFood`, `scoring.spiceMatch`, and `scoring.dislikedIngredient`.
 
 ## Stable DOM IDs
 
@@ -64,6 +67,13 @@ The frozen configuration object protects these names: `projectName`, `sampleData
 - `safety-note`
 - `use-current-location`
 - `location-message`
+- `allergy-choices`
+- `dietary-choices`
+- `disliked-choices`
+- `cuisine-choices`
+- `spice-choices`
+- `favorite-choices`
+- `show-all-matches`
 
 ## Food profile
 
@@ -144,6 +154,7 @@ The frozen configuration object protects these names: `projectName`, `sampleData
   openingHours: [],
   lastChecked: "",
   matchScore: 0,
+  matchPercent: 0,
   matchReasons: [],
   warnings: [],
   directionsUrl: "",

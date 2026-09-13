@@ -13,7 +13,7 @@ Run this permanent regression list after every phase. Add checks for later phase
 9. [ ] `app.js` performs no rendering or DOM mutation.
 10. [ ] Only `source.js` loads JSON or accesses local storage.
 11. [ ] All configurable values are in `config.js`.
-12. [ ] Restaurant data contains exactly five records and every required restaurant and dish key.
+12. [ ] Restaurant data contains exactly ten records and every required restaurant and dish key.
 13. [ ] A profile can be saved, restored after refresh, and cleared.
 14. [ ] Prepared location and radius filters change the result set and never exceed 20 km.
 15. [ ] A known allergy conflict removes the affected dish.
@@ -30,3 +30,10 @@ Run this permanent regression list after every phase. Add checks for later phase
 26. [ ] Precise current coordinates are never written to local storage.
 27. [ ] Choosing a prepared location exits current-location mode without changing the saved profile.
 28. [ ] The complete flow remains usable at 375 px and a normal laptop width.
+29. [ ] Profile suggestion chips update the existing fields, restore with the saved profile, and clear with it.
+30. [ ] Match percentages are deterministic, stay between 0 and 100, and are labeled as preference compatibility rather than safety.
+31. [ ] Exactly one first result is visually identified as the best match.
+32. [ ] Only the top three results are initially visible when more matches exist.
+33. [ ] The view-all control reveals every result and can return to the top three.
+34. [ ] Ratings identify their source when a rating is available.
+35. [ ] The burgundy-and-cream identity, custom mark, controls, and result cards remain usable at phone and laptop widths.

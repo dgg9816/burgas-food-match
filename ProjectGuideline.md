@@ -8,7 +8,7 @@ This is the final product guideline for a personal university school project bui
 - **Project category:** Category 1 - curated data
 - **Target build time:** Roughly two hours if restaurant research is completed efficiently
 - **MVP location:** Burgas, Bulgaria
-- **MVP data size:** Exactly five restaurants
+- **MVP data size:** Exactly ten restaurants
 - **Cost:** $0; no billing account, payment card, paid API, or paid trial
 
 Codex must read this file and `TechnicalGuideline.md` before starting or continuing any phase.
@@ -42,7 +42,7 @@ The interface must clearly distinguish medical restrictions from preferences.
 
 ## 4. Approved MVP Inclusions
 
-- Exactly five manually researched Burgas restaurants.
+- Exactly ten manually researched Burgas restaurants.
 - A project-local restaurant and dish dataset.
 - Allergies, dietary rules, disliked ingredients, preferred cuisines, spice tolerance, and favorite foods.
 - Exclusion of a dish when the data contains a known conflict with a selected allergy.
@@ -125,7 +125,7 @@ The score measures profile compatibility, not medical safety. Codex must not inv
 
 Restaurant research and verification is the first product task inside Phase 1.
 
-Exactly five restaurant records must be prepared. Together they must demonstrate:
+Exactly ten restaurant records must be prepared. Together they must demonstrate:
 
 - more than one cuisine;
 - at least one dietary-rule match;
@@ -209,7 +209,7 @@ Create an empty but well-shaped project whose stable seams and visible states ar
 
 Do not start Phase 1 until all acceptance criteria pass and the public foundation is visible.
 
-## 10. PHASE 1 - Five Restaurants, Food Profile, and Recommendations
+## 10. PHASE 1 - Ten Restaurants, Food Profile, and Recommendations
 
 ### Goal
 
@@ -217,7 +217,7 @@ Replace the sample-only behavior inside the stable foundation with the useful cu
 
 ### Required work
 
-- Research and verify exactly five Burgas restaurants.
+- Research and verify exactly ten Burgas restaurants.
 - Replace sample data with final-shape curated restaurant data.
 - Build the complete food-profile controls.
 - Save and clear one profile through the permanent `source.save()` and `source.list()` methods.
@@ -231,7 +231,7 @@ Replace the sample-only behavior inside the stable foundation with the useful cu
 
 ### Acceptance criteria
 
-1. Exactly five sourced restaurants are present.
+1. Exactly ten sourced restaurants are present.
 2. All restaurant and dish records follow `CONTRACTS.md` without omitted keys.
 3. The food profile can be entered, saved, restored after refresh, and cleared.
 4. Prepared manual location and radius filtering work.
@@ -315,4 +315,4 @@ If an excluded component appears necessary, Codex must stop and explain why rath
 
 ## 13. Definition of Done
 
-A person can open the public site, create a food profile, choose a prepared or current Burgas location, select a radius up to 20 km, receive transparent suggestions from exactly five restaurants, see honest warnings and data freshness, and open directions. The site works on a phone and laptop, has no secret or paid dependency, and is simple enough for the student to explain.
+A person can open the public site, create a food profile, choose a prepared or current Burgas location, select a radius up to 20 km, receive transparent suggestions from exactly ten restaurants, see honest warnings and data freshness, and open directions. The site works on a phone and laptop, has no secret or paid dependency, and is simple enough for the student to explain.

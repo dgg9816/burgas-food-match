@@ -19,7 +19,7 @@ async function loadJson(path) {
 }
 
 function validateRestaurants(restaurants) {
-  if (restaurants.length !== config.restaurantLimit) throw new Error("Restaurant data must contain exactly five records.");
+  if (restaurants.length !== config.restaurantLimit) throw new Error(`Restaurant data must contain exactly ${config.restaurantLimit} records.`);
   restaurants.forEach((restaurant) => {
     if (!restaurantKeys.every((key) => Object.hasOwn(restaurant, key))) throw new Error("A restaurant record is missing required information.");
     if (!Number.isFinite(restaurant.latitude) || !Number.isFinite(restaurant.longitude)) throw new Error("A restaurant has invalid coordinates.");
@@ -53,6 +53,18 @@ function locationErrorMessage(error) {
   if (error?.code === 2) return "Your current location is unavailable. Continue with the prepared location.";
   if (error?.code === 3) return "Finding your location took too long. Continue with the prepared location or try again.";
   return "Your current location could not be read. Continue with the prepared location.";
+}
+
+function maximumPreferenceScore(profile) {
+  return profile.dietaryRules.length * config.scoring.dietaryMatch
+    + (profile.preferredCuisines.length ? config.scoring.preferredCuisine : 0)
+    + (profile.favoriteFoods.length ? config.scoring.favoriteFood : 0)
+    + (profile.spiceTolerance !== "unknown" ? config.scoring.spiceMatch : 0);
+}
+
+function preferenceMatchPercent(score, maximumScore) {
+  if (!maximumScore) return 0;
+  return Math.min(config.matchPercentMaximum, Math.max(0, Math.round(score / maximumScore * config.matchPercentMaximum)));
 }
 
 function scoreDish(restaurant, dish, profile) {
@@ -91,6 +103,7 @@ export const source = Object.freeze({
     if (!location || !Number.isFinite(location.latitude) || !Number.isFinite(location.longitude)) throw new Error("Choose a valid Burgas starting point.");
     if (!Number.isFinite(radiusKm) || radiusKm <= 0 || radiusKm > config.maxRadiusKm) throw new Error("Choose a search radius up to 20 km.");
     const profile = Object.fromEntries(profileKeys.map((key) => [key, key === "spiceTolerance" ? params.profile[key] : normalizeList(params.profile[key])]));
+    const maximumScore = maximumPreferenceScore(profile);
     return restaurants.map((restaurant) => {
       const approximateDistance = distanceKm(location, restaurant);
       if (approximateDistance > radiusKm) return null;
@@ -99,7 +112,7 @@ export const source = Object.freeze({
         .filter((entry) => entry && entry.score >= config.minimumMatchScore)
         .sort((a, b) => b.score - a.score);
       if (!eligible.length) return null;
-      return { id: restaurant.id, name: restaurant.name, address: restaurant.address, distanceKm: Number(approximateDistance.toFixed(config.distanceDecimals)), priceLevel: restaurant.priceLevel, rating: restaurant.rating, ratingSource: restaurant.ratingSource, openingHours: restaurant.openingHours, lastChecked: restaurant.lastChecked, matchScore: eligible[0].score, matchReasons: [...new Set(eligible.flatMap((entry) => entry.reasons))], warnings: [...new Set(eligible.flatMap((entry) => entry.warnings))], directionsUrl: buildDirectionsUrl(restaurant.directionsQuery), verificationNote: restaurant.verificationNote, dishes: eligible.slice(0, 3).map((entry) => entry.dish) };
+      return { id: restaurant.id, name: restaurant.name, address: restaurant.address, distanceKm: Number(approximateDistance.toFixed(config.distanceDecimals)), priceLevel: restaurant.priceLevel, rating: restaurant.rating, ratingSource: restaurant.ratingSource, openingHours: restaurant.openingHours, lastChecked: restaurant.lastChecked, matchScore: eligible[0].score, matchPercent: preferenceMatchPercent(eligible[0].score, maximumScore), matchReasons: [...new Set(eligible.flatMap((entry) => entry.reasons))], warnings: [...new Set(eligible.flatMap((entry) => entry.warnings))], directionsUrl: buildDirectionsUrl(restaurant.directionsQuery), verificationNote: restaurant.verificationNote, dishes: eligible.slice(0, 3).map((entry) => entry.dish) };
     }).filter(Boolean).sort((a, b) => b.matchScore - a.matchScore || a.distanceKm - b.distanceKm);
   },
   async detail(id) { const item = (await getRestaurants()).find((entry) => entry.id === id); if (!item) throw new Error("That restaurant could not be found."); return item; },

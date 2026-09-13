@@ -119,6 +119,9 @@ showError(message)
 showEmpty(message)
 renderList(items)
 clearResults()
+renderProfileChoices(choices)
+toggleProfileChoice(choice)
+setResultExpansion(isExpanded)
 ```
 
 Behavior:
@@ -162,10 +165,12 @@ export const config = Object.freeze({
   sampleDataPath: "./data/sample.json",
   restaurantDataPath: "./data/restaurants.json",
   locationDataPath: "./data/locations.json",
-  restaurantLimit: 5,
+  restaurantLimit: 10,
   maxRadiusKm: 20,
   profileStorageKey: "burgas-food-match-profile",
   geolocationTimeoutMs: 10000,
+  topMatchCount: 3,
+  matchPercentMaximum: 100,
   directionsBaseUrl: "https://www.google.com/maps/dir/?api=1",
   featureFlags: Object.freeze({
     curatedRecommendations: false,
@@ -266,6 +271,7 @@ No required key may be omitted. Use `""`, `null`, `false`, or `[]` for missing v
   openingHours: [],
   lastChecked: "",
   matchScore: 0,
+  matchPercent: 0,
   matchReasons: [],
   warnings: [],
   directionsUrl: "",
@@ -307,6 +313,16 @@ Phase 2 may add and then protect:
 
 - `use-current-location`
 - `location-message`
+
+The enhanced MVP may add and then protect:
+
+- `allergy-choices`
+- `dietary-choices`
+- `disliked-choices`
+- `cuisine-choices`
+- `spice-choices`
+- `favorite-choices`
+- `show-all-matches`
 
 Every ID JavaScript depends on must be listed in `CONTRACTS.md`. Existing protected IDs may not be renamed or removed without asking.
 
@@ -389,7 +405,7 @@ Malformed or outdated saved data must be ignored safely. The user must have a vi
 10. Only `source.js` loads JSON or accesses local storage.
 11. All configurable values are in `config.js`.
 
-Phase 1 must add checks for five-record validation, profile persistence, matching, known conflicts, unknown warnings, radius, sources, freshness, and directions.
+Phase 1 must add checks for ten-record validation, profile persistence, matching, known conflicts, unknown warnings, radius, sources, freshness, and directions.
 
 Phase 2 must add checks for location granted, denied, unavailable, timeout, non-persistence of coordinates, and responsive regression.
 
@@ -400,7 +416,7 @@ Never remove an earlier check.
 The site must never fail into a blank page. Handle:
 
 - malformed or missing JSON;
-- record count other than exactly five in Phase 1;
+- record count other than exactly ten in Phase 1;
 - missing required keys;
 - invalid coordinates;
 - malformed saved profile;
